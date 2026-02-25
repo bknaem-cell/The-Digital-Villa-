@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>TdV - Premium Interface</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+        body {
+            margin: 0;
+            /* আপনার সেই ডার্ক ফিউচারিস্টিক ব্যাকগ্রাউন্ড */
+            background: radial-gradient(circle, #0a192f 0%, #000000 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        /* লোগো - একদম শার্প এবং গ্লোয়িং */
+        .logo-box {
+            font-size: 60px;
+            font-weight: bold;
+            color: #00d2ff;
+            margin-bottom: 50px;
+            text-shadow: 0 0 20px #00d2ff;
+            border: 2px solid #00d2ff;
+            padding: 20px;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        /* আপনার চাওয়া বাটন স্টাইল - যেখানে ব্যাকগ্রাউন্ড মনে হবে নেই */
+        .transparent-btn {
+            width: 100%;
+            padding: 18px;
+            margin: 15px 0;
+            background: transparent; /* ব্যাকগ্রাউন্ড নেই */
+            border: 2px solid rgba(0, 210, 255, 0.6); /* হালকা গ্লোয়িং বর্ডার */
+            color: #00d2ff;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 0px; /* শার্প এজ - সস্তা গোল নয় */
+            transition: 0.3s;
+            backdrop-filter: blur(2px); /* হালকা কাঁচের মতো স্বচ্ছতা */
+        }
+
+        .transparent-btn:hover {
+            background: rgba(0, 210, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
+            border-color: #00d2ff;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #00d2ff; /* শুধু নিচের লাইনটি থাকবে */
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-box">TdV</div>
+        
+        <input type="text" class="input-field" placeholder="নাম: নাঈম ইব্রাহিম">
+        <input type="text" class="input-field" placeholder="কোড: নাঈম ১৮">
+        
+        <button class="transparent-btn">লবিতে প্রবেশ করুন</button>
+        <button class="transparent-btn" style="border-color: #ffd700; color: #ffd700;">ভার্চুয়াল শপ</button>
+    </div>
+
+</body>
+</html>
