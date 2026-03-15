@@ -1,90 +1,140 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TdV - Premium Interface</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape">
+    <title>918 Digital Vela</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
-
-        body {
-            margin: 0;
-            /* আপনার সেই ডার্ক ফিউচারিস্টিক ব্যাকগ্রাউন্ড */
-            background: radial-gradient(circle, #0a192f 0%, #000000 100%);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* মেইন কন্টেইনার */
+        .loading-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            color: white;
-        }
-
-        .container {
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-        }
-
-        /* লোগো - একদম শার্প এবং গ্লোয়িং */
-        .logo-box {
-            font-size: 60px;
-            font-weight: bold;
-            color: #00d2ff;
-            margin-bottom: 50px;
-            text-shadow: 0 0 20px #00d2ff;
-            border: 2px solid #00d2ff;
-            padding: 20px;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-        }
-
-        /* আপনার চাওয়া বাটন স্টাইল - যেখানে ব্যাকগ্রাউন্ড মনে হবে নেই */
-        .transparent-btn {
             width: 100%;
-            padding: 18px;
-            margin: 15px 0;
-            background: transparent; /* ব্যাকগ্রাউন্ড নেই */
-            border: 2px solid rgba(0, 210, 255, 0.6); /* হালকা গ্লোয়িং বর্ডার */
-            color: #00d2ff;
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            border-radius: 0px; /* শার্প এজ - সস্তা গোল নয় */
-            transition: 0.3s;
-            backdrop-filter: blur(2px); /* হালকা কাঁচের মতো স্বচ্ছতা */
         }
 
-        .transparent-btn:hover {
-            background: rgba(0, 210, 255, 0.1);
-            box-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
-            border-color: #00d2ff;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 15px;
+        /* প্রোফাইল সার্কেল */
+        .profile-holder {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            background: #111;
             margin-bottom: 20px;
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid #00d2ff; /* শুধু নিচের লাইনটি থাকবে */
-            color: white;
-            font-size: 16px;
-            outline: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* টেক্সট ডিজাইন */
+        .sweet-text {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        /* লোডিং বক্স */
+        .progress-box {
+            width: 250px;
+            height: 6px;
+            background: #1a1a1a;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff0000, #ff4d4d);
+            box-shadow: 0 0 10px #ff0000;
+            transition: width 0.1s;
+        }
+
+        /* পারসেন্টেজ ও স্ট্যাটাস */
+        .status-text {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* ভাসমান রুপোর ব্যাক বাটন (নিয়ন রেড) */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #e0e0e0; /* রুপোর মতো কালার */
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px #ff0000, inset 0 0 10px #fff;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo-box">TdV</div>
-        
-        <input type="text" class="input-field" placeholder="নাম: নাঈম ইব্রাহিম">
-        <input type="text" class="input-field" placeholder="কোড: নাঈম ১৮">
-        
-        <button class="transparent-btn">লবিতে প্রবেশ করুন</button>
-        <button class="transparent-btn" style="border-color: #ffd700; color: #ffd700;">ভার্চুয়াল শপ</button>
+    <a href="#" class="back-btn">×</a>
+
+    <div class="loading-container">
+        <div class="profile-holder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="#333"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+
+        <div class="sweet-text">NI MY SWEET</div>
+
+        <div class="progress-box">
+            <div class="progress-fill" id="fill"></div>
+        </div>
+
+        <div class="status-text">চালু হচ্ছে... <span id="percent">0</span>%</div>
     </div>
 
+    <script>
+        let progress = 0;
+        const fill = document.getElementById('fill');
+        const percentText = document.getElementById('percent');
+
+        // লোডিং এনিমেশন কন্ট্রোল (২ সেকেন্ডের জন্য)
+        const interval = setInterval(() => {
+            progress += 1;
+            fill.style.width = progress + '%';
+            percentText.innerText = progress;
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                // লোডিং শেষ হলে এখানে পরবর্তী পেজের কোড আসবে
+            }
+        }, 20); // ২ সেকেন্ডে শেষ করার গতি
+    </script>
 </body>
 </html>
