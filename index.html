@@ -1,140 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape">
-    <title>918 Digital Vela</title>
+    <title>NAYEM 18 - FINAL ACCURATE BLUEPRINT</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background-color: #000; 
-            color: #fff; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+        :root { --cyan: #00ffff; --gold: #d4af37; --green: #39ff14; --bg: #000; }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: sans-serif; overflow: hidden; height: 100vh; }
+        
+        /* আপনার নকশার মূল গ্রিড */
+        .master-layout {
+            display: grid;
+            grid-template-columns: 180px 1fr 180px;
+            grid-template-rows: 60px 1fr 1fr 1fr 80px;
+            gap: 10px; height: 100vh; padding: 10px; box-sizing: border-box;
         }
 
-        /* মেইন কন্টেইনার */
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
+        .node { border: 1.5px solid var(--cyan); background: rgba(0, 255, 255, 0.05); border-radius: 5px; position: relative; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
+        .node:hover { background: rgba(0, 255, 255, 0.2); box-shadow: 0 0 15px var(--cyan); }
 
-        /* প্রোফাইল সার্কেল */
-        .profile-holder {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 2px solid #333;
-            background: #111;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-        }
+        /* মাঝখানের ১০কিমি হেডকোয়ার্টার */
+        .center-display { grid-column: 2; grid-row: 2 / 5; border: 2px solid var(--cyan); flex-direction: column; }
+        
+        /* ভয়েস কমান্ড ডিসপ্লে প্যানেল */
+        .voice-section { grid-column: 2; grid-row: 5; border: 1.5px solid var(--green); display: flex; justify-content: space-between; align-items: center; padding: 0 20px; background: rgba(0, 255, 0, 0.05); }
+        .voice-text { color: var(--green); font-size: 18px; flex-grow: 1; text-align: center; }
+        .ctrl-icon { font-size: 28px; cursor: pointer; }
 
-        /* টেক্সট ডিজাইন */
-        .sweet-text {
-            font-size: 14px;
-            letter-spacing: 3px;
-            color: #fff;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
+        /* পজিশন অনুযায়ী বাটন লেবেল */
+        .label { position: absolute; top: 2px; left: 5px; font-size: 10px; color: var(--gold); }
+        .icon-art { font-size: 35px; }
 
-        /* লোডিং বক্স */
-        .progress-box {
-            width: 250px;
-            height: 6px;
-            background: #1a1a1a;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #ff0000, #ff4d4d);
-            box-shadow: 0 0 10px #ff0000;
-            transition: width 0.1s;
-        }
-
-        /* পারসেন্টেজ ও স্ট্যাটাস */
-        .status-text {
-            font-size: 12px;
-            color: #888;
-        }
-
-        /* ভাসমান রুপোর ব্যাক বাটন (নিয়ন রেড) */
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: #e0e0e0; /* রুপোর মতো কালার */
-            border: 2px solid #ff0000;
-            color: #ff0000;
-            font-weight: bold;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 20px #ff0000, inset 0 0 10px #fff;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 20px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        /* ফুল স্ক্রিন ও ব্যাক বাটন লজিক */
+        .fullscreen { position: fixed; inset: 0; z-index: 1000; background: var(--bg); display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .back-btn { position: absolute; top: 20px; right: 20px; background: var(--gold); color: #000; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <a href="#" class="back-btn">×</a>
+<div class="fullscreen" id="detailView">
+    <button class="back-btn" onclick="closeDetail()">BACK (আগের জায়গায় ফিরুন)</button>
+    <h1 id="detailTitle" style="color: var(--cyan);"></h1>
+    <div id="detailContent" style="font-size: 100px;"></div>
+</div>
 
-    <div class="loading-container">
-        <div class="profile-holder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="#333"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-        </div>
+<div class="master-layout">
+    <div class="node" onclick="openDetail('ইনভেন্টরি', '📦')"><span class="label">11</span><span class="icon-art">📦</span></div>
+    <div class="node" onclick="openDetail('ট্রান্সপোর্ট', '🚚')"><span class="label">14</span><span class="icon-art">🚚</span></div>
+    <div class="node" style="grid-row: span 2;" onclick="openDetail('T D V System', '🌐')"><span>T D V</span></div>
 
-        <div class="sweet-text">NI MY SWEET</div>
-
-        <div class="progress-box">
-            <div class="progress-fill" id="fill"></div>
-        </div>
-
-        <div class="status-text">চালু হচ্ছে... <span id="percent">0</span>%</div>
+    <div class="node center-display">
+        <div style="color: var(--gold); font-size: 20px;">10KM SQ HEADQUARTERS</div>
+        <div style="font-size: 60px; margin: 20px 0;">🛡️</div>
+        <div style="font-size: 14px; color: var(--cyan);">কৃষি ও ইনভেন্টরি সচল আছে</div>
     </div>
 
-    <script>
-        let progress = 0;
-        const fill = document.getElementById('fill');
-        const percentText = document.getElementById('percent');
+    <div class="node" onclick="openDetail('ফার্মিং ইউনিট', '🚜')"><span class="label">13</span><span class="icon-art">🚜</span></div>
+    <div class="node" onclick="openDetail('পাওয়ার সিস্টেম', '⚡')"><span class="label">12</span><span class="icon-art">⚡</span></div>
+    <div class="node" onclick="openDetail('ইউজার প্রোফাইল', '👤')"><span class="label">5-E</span>👤 NAYEM</div>
+    <div class="node"><span class="label">6</span>📅 08:03:2026</div>
+    <div class="node" onclick="openDetail('স্ট্যাটাস', '📊')"><span class="label">3-C</span>📊 STATUS</div>
+    <div class="node" style="color: var(--gold);"><span class="label">2-B</span>💰 1000Cr</div>
+    <div class="node" style="color: var(--gold);"><span class="label">1-A</span>🪙 00 টাকা</div>
 
-        // লোডিং এনিমেশন কন্ট্রোল (২ সেকেন্ডের জন্য)
-        const interval = setInterval(() => {
-            progress += 1;
-            fill.style.width = progress + '%';
-            percentText.innerText = progress;
+    <div class="node voice-section">
+        <div class="ctrl-icon" onclick="toggleMic()">🎤</div>
+        <div class="voice-text" id="vTxt">ভয়েস কমান্ডের লেখা এখানে দেখা যাবে...</div>
+        <div class="ctrl-icon" id="spk" onclick="toggleSpk()">🔊</div>
+    </div>
+</div>
 
-            if (progress >= 100) {
-                clearInterval(interval);
-                // লোডিং শেষ হলে এখানে পরবর্তী পেজের কোড আসবে
-            }
-        }, 20); // ২ সেকেন্ডে শেষ করার গতি
-    </script>
+<script>
+    function openDetail(title, icon) {
+        document.getElementById('detailTitle').innerText = title;
+        document.getElementById('detailContent').innerText = icon;
+        document.getElementById('detailView').style.display = 'flex';
+    }
+
+    function closeDetail() {
+        document.getElementById('detailView').style.display = 'none';
+    }
+
+    function toggleMic() {
+        document.getElementById('vTxt').innerText = "শুনছি... বলুন নাঈম ইব্রাহিম";
+    }
+
+    function toggleSpk() {
+        const s = document.getElementById('spk');
+        s.innerHTML = s.innerHTML === '🔊' ? '🔇' : '🔊';
+    }
+</script>
+
 </body>
 </html>
